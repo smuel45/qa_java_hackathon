@@ -13,4 +13,12 @@
         <maven.compiler.target>13</maven.compiler.target>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.microsoft.sqlserver</groupId>
+            <artifactId>mssql-jdbc_auth</artifactId>
+            <version>9.4.0.x86</version>
+        </dependency>
+    </dependencies>
+
 </project>
