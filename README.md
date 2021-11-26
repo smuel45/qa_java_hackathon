@@ -1,1 +1,0 @@
-# qa_java_hackathon
