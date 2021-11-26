@@ -13,7 +13,9 @@ import java.sql.SQLException;
  */
 public class JdbcSQLServerConnection {
 
-    public static void main(String[] args) {
+    private static Connection conn;
+
+    public static void getConnection() {
 
         Connection conn = null;
 
@@ -42,5 +44,9 @@ public class JdbcSQLServerConnection {
                 ex.printStackTrace();
             }
         }
+    }
+
+    public static void getItemList(){
+
     }
 }
