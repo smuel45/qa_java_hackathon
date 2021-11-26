@@ -1,6 +1,7 @@
 package databaseconnection;
 
 import models.Item;
+import models.Order;
 
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
@@ -53,7 +54,7 @@ public class JdbcSQLServerConnection {
         }
     }
 
-    private static List<Item> QueryItem(String sqlstatement) throws SQLException {
+    public static List<Item> QueryItem(String sqlstatement) throws SQLException {
         Statement stmt = conn.createStatement();
         List<Item> items = new ArrayList<>();
         try (ResultSet resultSet = stmt.executeQuery(sqlstatement)) {
@@ -68,7 +69,7 @@ public class JdbcSQLServerConnection {
         return items;
     }
 
-    private static boolean UpdateItem(List<Item> items, String action) throws SQLException {
+    public static boolean UpdateItem(List<Item> items, String action) throws SQLException {
         Statement stmt = conn.createStatement();
 
         int length = items.size();
@@ -99,6 +100,55 @@ public class JdbcSQLServerConnection {
         return true;
     }
 
+    public static List<Order> QueryOrder(String sqlstatement) throws SQLException {
+        Statement stmt = conn.createStatement();
+        List<Order> orders = new ArrayList<>();
+        try (ResultSet resultSet = stmt.executeQuery(sqlstatement)) {
+            while (resultSet.next()) {
+                Order ord = new Order();
 
+                ord.orderID = resultSet.getLong("value");
+                ord.customerID = resultSet.getString("value");
+
+                orders.add(ord);
+            }
+        }
+        return orders;
+    }
+
+    public static boolean UpdateItemInOrder(Order Order, List<Item> items, String action) throws SQLException {
+        Statement stmt = conn.createStatement();
+
+        int length = items.size();
+
+        if(action == "insert"){
+            for (int i = 0; i < length; i++) {
+                String statement = "INSERT INTO Order (id, customer_id, item_id, 1name, value) " +
+                        "VALUES (" + items.get(i).getId() + ", " + items.get(i).getItemName() + ", " + items.get(i).getItemValue() + ");";
+                stmt.executeUpdate(statement);
+            }
+        }
+        if(action == "update"){
+            for (int i = 0; i < length; i++) {
+                String statement = "UPDATE item " +
+                        "SET name= '" + items.get(i).getItemName() + "', value= '" + items.get(i).getItemValue() + "'" +
+                        "WHERE id = '" + items.get(i).getId() + "';";
+                stmt.executeUpdate(statement);
+            }
+        }
+        if(action == "delete"){
+            for (int i = 0; i < length; i++) {
+                String statement = "DELETE FROM item WHERE id = '" + items.get(i).getId() + "';";
+                stmt.executeUpdate(statement);
+            }
+        }
+
+
+        return true;
+    }
 
 }
+
+
+
+item order and customer
