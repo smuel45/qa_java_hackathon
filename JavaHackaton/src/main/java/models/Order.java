@@ -1,4 +1,6 @@
-package models;
+package classes;
+import java.util.ArrayList;
+import Items;
 
 import java.util.ArrayList;
 import java.util.List;
